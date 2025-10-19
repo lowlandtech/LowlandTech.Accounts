@@ -4,6 +4,7 @@ namespace LowlandTech.Accounts.Domain;
 public class AccountsContext : DbContext
 {
     public AccountsContext(DbContextOptions options) : base(options) { }
+    public AccountsContext() : this(new DbContextOptions<AccountsContext>()) { }
 
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<AccountPreference> AccountPreferences => Set<AccountPreference>();
