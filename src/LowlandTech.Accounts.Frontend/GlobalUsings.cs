@@ -37,7 +37,6 @@ global using LowlandTech.Accounts.Abstractions.Sessions;
 global using LowlandTech.Accounts.Frontend.Infrastructure.Auth;
 global using LowlandTech.Accounts.Frontend.Infrastructure.State;
 global using LowlandTech.Accounts.Frontend.Infrastructure.State.Tables;
-global using LowlandTech.Accounts.Frontend.Infrastructure.Http;
 
 // Razor components
 global using LowlandTech.Accounts.Frontend.Components;
