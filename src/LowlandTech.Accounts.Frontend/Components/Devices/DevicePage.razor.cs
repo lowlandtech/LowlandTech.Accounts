@@ -6,14 +6,14 @@ public partial class DevicePage : ComponentBase, IDisposable
     [Inject] private IPermService Perms { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private DevicePageState PageState { get; set; } = default!;
-    [Inject] private IDeviceApi Api { get; set; } = default!;
+    [Inject] private DeviceApiService ApiService { get; set; } = default!;
 
     private Func<GridStateVirtualize<DeviceDto>, CancellationToken, Task<GridData<DeviceDto>>> _serverData = default!;
     private bool _canCreate;
 
     protected override async Task OnInitializedAsync()
     {
-        _serverData = DeviceDataGridAdapter.CreateDeviceServerData(Api, PageState);
+        _serverData = DeviceDataGridAdapter.CreateDeviceServerData(ApiService, PageState);
         PageState.ItemsChanged += OnDeviceItemsChanged;
         _canCreate = await Perms.CanAsync("accounts::create");
         PageState.Changed += OnPagePrefsChanged;

@@ -6,14 +6,14 @@ public partial class PasswordResetTokenPage : ComponentBase, IDisposable
     [Inject] private IPermService Perms { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private PasswordResetTokenPageState PageState { get; set; } = default!;
-    [Inject] private IPasswordResetTokenApi Api { get; set; } = default!;
+    [Inject] private PasswordResetTokenApiService ApiService { get; set; } = default!;
 
     private Func<GridStateVirtualize<PasswordResetTokenDto>, CancellationToken, Task<GridData<PasswordResetTokenDto>>> _serverData = default!;
     private bool _canCreate;
 
     protected override async Task OnInitializedAsync()
     {
-        _serverData = PasswordResetTokenDataGridAdapter.CreatePasswordResetTokenServerData(Api, PageState);
+        _serverData = PasswordResetTokenDataGridAdapter.CreatePasswordResetTokenServerData(ApiService, PageState);
         PageState.ItemsChanged += OnPasswordResetTokenItemsChanged;
         _canCreate = await Perms.CanAsync("accounts::create");
         PageState.Changed += OnPagePrefsChanged;

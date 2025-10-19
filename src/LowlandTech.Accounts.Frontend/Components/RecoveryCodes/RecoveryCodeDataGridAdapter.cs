@@ -4,7 +4,7 @@ namespace LowlandTech.Accounts.Frontend.Components.RecoveryCodes;
 public static class RecoveryCodeDataGridAdapter
 {
     public static Func<GridStateVirtualize<RecoveryCodeDto>, CancellationToken, Task<GridData<RecoveryCodeDto>>> 
-        CreateRecoveryCodeServerData(IRecoveryCodeApi api, RecoveryCodePageState pageState)
+        CreateRecoveryCodeServerData(RecoveryCodeApiService apiService, RecoveryCodePageState pageState)
     {
         return async (gridState, ct) =>
         {
@@ -26,7 +26,7 @@ public static class RecoveryCodeDataGridAdapter
                 }
 
                 // Call the API
-                var response = await api.ListAsync(
+                var result = await apiService.ListAsync(
                     page, 
                     pageSize, 
                     searchString, 
@@ -35,23 +35,32 @@ public static class RecoveryCodeDataGridAdapter
                     ct
                 );
 
-                if (response.IsSuccessStatusCode && response.Content != null)
+                if (result is not null)
                 {
                     return new GridData<RecoveryCodeDto>
                     {
-                        Items = response.Content.Items,
-                        TotalItems = response.Content.TotalCount
+                        Items = result.Items,
+                        TotalItems = result.TotalCount
                     };
                 }
                 else
                 {
-                    pageState.ToastError($"Failed to load recoverycodes: {response.Error?.Content}");
+                    pageState.ToastError($"Failed to load recoverycodes: No data returned");
                     return new GridData<RecoveryCodeDto>
                     {
                         Items = [],
                         TotalItems = 0
                     };
                 }
+            }
+            catch (HttpRequestException ex)
+            {
+                pageState.ToastError($"HTTP error loading recoverycodes: {ex.Message}");
+                return new GridData<RecoveryCodeDto>
+                {
+                    Items = [],
+                    TotalItems = 0
+                };
             }
             catch (Exception ex)
             {

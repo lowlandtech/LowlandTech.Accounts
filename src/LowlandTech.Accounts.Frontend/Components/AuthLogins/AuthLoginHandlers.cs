@@ -1,31 +1,35 @@
-
 namespace LowlandTech.Accounts.Frontend.Components.AuthLogins;
 
 // INIT → calls API, then publishes InitEvent
-public sealed class AuthLoginInitHandler(IAuthLoginApi api, IMediator mediator, AppState app)
+public sealed class AuthLoginInitHandler(AuthLoginApiService apiService, IMediator mediator, AppState app)
     : IRequestHandler<AuthLoginInitAction, Unit>
 {
-    private readonly IAuthLoginApi _api = api;
+    private readonly AuthLoginApiService _apiService = apiService;
     private readonly IMediator _mediator = mediator;
     private readonly AppState _app = app;
 
     public async Task<Unit> Handle(AuthLoginInitAction request, CancellationToken ct)
     {
-        var resp = await _api.ListAsync(request.Page, request.PageSize, request.Query, request.Sort, request.Dir, ct);
-        if (resp.IsSuccessStatusCode && resp.Content is not null)
-        {
-            await _mediator.Publish(new AuthLoginInitEvent(resp.Content.Items, request.Page, request.PageSize, request.Query, request.Sort, request.Dir), ct);
-            return Unit.Value;
-        }
         try
         {
-            var pd = await resp.Error?.GetContentAsAsync<ProblemDetails>();
-            var title = pd?.Title ?? $"HTTP {(int)resp.StatusCode}";
-            _app.ToastError(title + (string.IsNullOrWhiteSpace(pd?.Detail) ? string.Empty : $": {pd.Detail}"));
+            var result = await _apiService.ListAsync(request.Page, request.PageSize, request.Query, request.Sort, request.Dir, ct);
+            if (result is not null)
+            {
+                await _mediator.Publish(new AuthLoginInitEvent(result.Items, request.Page, request.PageSize, request.Query, request.Sort, request.Dir), ct);
+            }
+            else
+            {
+                _app.ToastError("Failed to load AuthLogins: No data returned");
+            }
         }
-        catch
+        catch (HttpRequestException ex)
         {
-            _app.ToastError($"HTTP {(int)resp.StatusCode}: {resp.ReasonPhrase}");
+            var statusCode = ex.StatusCode.HasValue ? $"HTTP {(int)ex.StatusCode.Value}" : "HTTP Error";
+            _app.ToastError($"{statusCode}: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            _app.ToastError($"Error loading AuthLogins: {ex.Message}");
         }
         return Unit.Value;
     }

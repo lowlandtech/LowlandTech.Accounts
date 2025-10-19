@@ -1,31 +1,35 @@
-
 namespace LowlandTech.Accounts.Frontend.Components.RecoveryCodes;
 
 // INIT → calls API, then publishes InitEvent
-public sealed class RecoveryCodeInitHandler(IRecoveryCodeApi api, IMediator mediator, AppState app)
+public sealed class RecoveryCodeInitHandler(RecoveryCodeApiService apiService, IMediator mediator, AppState app)
     : IRequestHandler<RecoveryCodeInitAction, Unit>
 {
-    private readonly IRecoveryCodeApi _api = api;
+    private readonly RecoveryCodeApiService _apiService = apiService;
     private readonly IMediator _mediator = mediator;
     private readonly AppState _app = app;
 
     public async Task<Unit> Handle(RecoveryCodeInitAction request, CancellationToken ct)
     {
-        var resp = await _api.ListAsync(request.Page, request.PageSize, request.Query, request.Sort, request.Dir, ct);
-        if (resp.IsSuccessStatusCode && resp.Content is not null)
-        {
-            await _mediator.Publish(new RecoveryCodeInitEvent(resp.Content.Items, request.Page, request.PageSize, request.Query, request.Sort, request.Dir), ct);
-            return Unit.Value;
-        }
         try
         {
-            var pd = await resp.Error?.GetContentAsAsync<ProblemDetails>();
-            var title = pd?.Title ?? $"HTTP {(int)resp.StatusCode}";
-            _app.ToastError(title + (string.IsNullOrWhiteSpace(pd?.Detail) ? string.Empty : $": {pd.Detail}"));
+            var result = await _apiService.ListAsync(request.Page, request.PageSize, request.Query, request.Sort, request.Dir, ct);
+            if (result is not null)
+            {
+                await _mediator.Publish(new RecoveryCodeInitEvent(result.Items, request.Page, request.PageSize, request.Query, request.Sort, request.Dir), ct);
+            }
+            else
+            {
+                _app.ToastError("Failed to load RecoveryCodes: No data returned");
+            }
         }
-        catch
+        catch (HttpRequestException ex)
         {
-            _app.ToastError($"HTTP {(int)resp.StatusCode}: {resp.ReasonPhrase}");
+            var statusCode = ex.StatusCode.HasValue ? $"HTTP {(int)ex.StatusCode.Value}" : "HTTP Error";
+            _app.ToastError($"{statusCode}: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            _app.ToastError($"Error loading RecoveryCodes: {ex.Message}");
         }
         return Unit.Value;
     }

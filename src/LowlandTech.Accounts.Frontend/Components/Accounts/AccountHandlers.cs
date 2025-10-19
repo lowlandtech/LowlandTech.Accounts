@@ -1,31 +1,35 @@
-
 namespace LowlandTech.Accounts.Frontend.Components.Accounts;
 
 // INIT → calls API, then publishes InitEvent
-public sealed class AccountInitHandler(IAccountApi api, IMediator mediator, AppState app)
+public sealed class AccountInitHandler(AccountApiService apiService, IMediator mediator, AppState app)
     : IRequestHandler<AccountInitAction, Unit>
 {
-    private readonly IAccountApi _api = api;
+    private readonly AccountApiService _apiService = apiService;
     private readonly IMediator _mediator = mediator;
     private readonly AppState _app = app;
 
     public async Task<Unit> Handle(AccountInitAction request, CancellationToken ct)
     {
-        var resp = await _api.ListAsync(request.Page, request.PageSize, request.Query, request.Sort, request.Dir, ct);
-        if (resp.IsSuccessStatusCode && resp.Content is not null)
-        {
-            await _mediator.Publish(new AccountInitEvent(resp.Content.Items, request.Page, request.PageSize, request.Query, request.Sort, request.Dir), ct);
-            return Unit.Value;
-        }
         try
         {
-            var pd = await resp.Error?.GetContentAsAsync<ProblemDetails>();
-            var title = pd?.Title ?? $"HTTP {(int)resp.StatusCode}";
-            _app.ToastError(title + (string.IsNullOrWhiteSpace(pd?.Detail) ? string.Empty : $": {pd.Detail}"));
+            var result = await _apiService.ListAsync(request.Page, request.PageSize, request.Query, request.Sort, request.Dir, ct);
+            if (result is not null)
+            {
+                await _mediator.Publish(new AccountInitEvent(result.Items, request.Page, request.PageSize, request.Query, request.Sort, request.Dir), ct);
+            }
+            else
+            {
+                _app.ToastError("Failed to load Accounts: No data returned");
+            }
         }
-        catch
+        catch (HttpRequestException ex)
         {
-            _app.ToastError($"HTTP {(int)resp.StatusCode}: {resp.ReasonPhrase}");
+            var statusCode = ex.StatusCode.HasValue ? $"HTTP {(int)ex.StatusCode.Value}" : "HTTP Error";
+            _app.ToastError($"{statusCode}: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            _app.ToastError($"Error loading Accounts: {ex.Message}");
         }
         return Unit.Value;
     }

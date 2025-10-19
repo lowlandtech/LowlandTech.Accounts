@@ -6,14 +6,14 @@ public partial class AddressPage : ComponentBase, IDisposable
     [Inject] private IPermService Perms { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private AddressPageState PageState { get; set; } = default!;
-    [Inject] private IAddressApi Api { get; set; } = default!;
+    [Inject] private AddressApiService ApiService { get; set; } = default!;
 
     private Func<GridStateVirtualize<AddressDto>, CancellationToken, Task<GridData<AddressDto>>> _serverData = default!;
     private bool _canCreate;
 
     protected override async Task OnInitializedAsync()
     {
-        _serverData = AddressDataGridAdapter.CreateAddressServerData(Api, PageState);
+        _serverData = AddressDataGridAdapter.CreateAddressServerData(ApiService, PageState);
         PageState.ItemsChanged += OnAddressItemsChanged;
         _canCreate = await Perms.CanAsync("accounts::create");
         PageState.Changed += OnPagePrefsChanged;

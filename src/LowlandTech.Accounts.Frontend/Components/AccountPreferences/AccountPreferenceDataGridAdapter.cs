@@ -4,7 +4,7 @@ namespace LowlandTech.Accounts.Frontend.Components.AccountPreferences;
 public static class AccountPreferenceDataGridAdapter
 {
     public static Func<GridStateVirtualize<AccountPreferenceDto>, CancellationToken, Task<GridData<AccountPreferenceDto>>> 
-        CreateAccountPreferenceServerData(IAccountPreferenceApi api, AccountPreferencePageState pageState)
+        CreateAccountPreferenceServerData(AccountPreferenceApiService apiService, AccountPreferencePageState pageState)
     {
         return async (gridState, ct) =>
         {
@@ -26,7 +26,7 @@ public static class AccountPreferenceDataGridAdapter
                 }
 
                 // Call the API
-                var response = await api.ListAsync(
+                var result = await apiService.ListAsync(
                     page, 
                     pageSize, 
                     searchString, 
@@ -35,23 +35,32 @@ public static class AccountPreferenceDataGridAdapter
                     ct
                 );
 
-                if (response.IsSuccessStatusCode && response.Content != null)
+                if (result is not null)
                 {
                     return new GridData<AccountPreferenceDto>
                     {
-                        Items = response.Content.Items,
-                        TotalItems = response.Content.TotalCount
+                        Items = result.Items,
+                        TotalItems = result.TotalCount
                     };
                 }
                 else
                 {
-                    pageState.ToastError($"Failed to load accountpreferences: {response.Error?.Content}");
+                    pageState.ToastError($"Failed to load accountpreferences: No data returned");
                     return new GridData<AccountPreferenceDto>
                     {
                         Items = [],
                         TotalItems = 0
                     };
                 }
+            }
+            catch (HttpRequestException ex)
+            {
+                pageState.ToastError($"HTTP error loading accountpreferences: {ex.Message}");
+                return new GridData<AccountPreferenceDto>
+                {
+                    Items = [],
+                    TotalItems = 0
+                };
             }
             catch (Exception ex)
             {

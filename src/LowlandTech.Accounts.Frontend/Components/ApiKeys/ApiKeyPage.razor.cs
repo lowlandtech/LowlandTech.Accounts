@@ -6,14 +6,14 @@ public partial class ApiKeyPage : ComponentBase, IDisposable
     [Inject] private IPermService Perms { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private ApiKeyPageState PageState { get; set; } = default!;
-    [Inject] private IApiKeyApi Api { get; set; } = default!;
+    [Inject] private ApiKeyApiService ApiService { get; set; } = default!;
 
     private Func<GridStateVirtualize<ApiKeyDto>, CancellationToken, Task<GridData<ApiKeyDto>>> _serverData = default!;
     private bool _canCreate;
 
     protected override async Task OnInitializedAsync()
     {
-        _serverData = ApiKeyDataGridAdapter.CreateApiKeyServerData(Api, PageState);
+        _serverData = ApiKeyDataGridAdapter.CreateApiKeyServerData(ApiService, PageState);
         PageState.ItemsChanged += OnApiKeyItemsChanged;
         _canCreate = await Perms.CanAsync("accounts::create");
         PageState.Changed += OnPagePrefsChanged;

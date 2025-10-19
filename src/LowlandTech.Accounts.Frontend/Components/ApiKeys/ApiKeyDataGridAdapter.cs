@@ -4,7 +4,7 @@ namespace LowlandTech.Accounts.Frontend.Components.ApiKeys;
 public static class ApiKeyDataGridAdapter
 {
     public static Func<GridStateVirtualize<ApiKeyDto>, CancellationToken, Task<GridData<ApiKeyDto>>> 
-        CreateApiKeyServerData(IApiKeyApi api, ApiKeyPageState pageState)
+        CreateApiKeyServerData(ApiKeyApiService apiService, ApiKeyPageState pageState)
     {
         return async (gridState, ct) =>
         {
@@ -26,7 +26,7 @@ public static class ApiKeyDataGridAdapter
                 }
 
                 // Call the API
-                var response = await api.ListAsync(
+                var result = await apiService.ListAsync(
                     page, 
                     pageSize, 
                     searchString, 
@@ -35,23 +35,32 @@ public static class ApiKeyDataGridAdapter
                     ct
                 );
 
-                if (response.IsSuccessStatusCode && response.Content != null)
+                if (result is not null)
                 {
                     return new GridData<ApiKeyDto>
                     {
-                        Items = response.Content.Items,
-                        TotalItems = response.Content.TotalCount
+                        Items = result.Items,
+                        TotalItems = result.TotalCount
                     };
                 }
                 else
                 {
-                    pageState.ToastError($"Failed to load apikeys: {response.Error?.Content}");
+                    pageState.ToastError($"Failed to load apikeys: No data returned");
                     return new GridData<ApiKeyDto>
                     {
                         Items = [],
                         TotalItems = 0
                     };
                 }
+            }
+            catch (HttpRequestException ex)
+            {
+                pageState.ToastError($"HTTP error loading apikeys: {ex.Message}");
+                return new GridData<ApiKeyDto>
+                {
+                    Items = [],
+                    TotalItems = 0
+                };
             }
             catch (Exception ex)
             {

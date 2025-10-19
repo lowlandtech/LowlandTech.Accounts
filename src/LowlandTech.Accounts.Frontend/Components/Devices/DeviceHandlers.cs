@@ -1,31 +1,35 @@
-
 namespace LowlandTech.Accounts.Frontend.Components.Devices;
 
 // INIT → calls API, then publishes InitEvent
-public sealed class DeviceInitHandler(IDeviceApi api, IMediator mediator, AppState app)
+public sealed class DeviceInitHandler(DeviceApiService apiService, IMediator mediator, AppState app)
     : IRequestHandler<DeviceInitAction, Unit>
 {
-    private readonly IDeviceApi _api = api;
+    private readonly DeviceApiService _apiService = apiService;
     private readonly IMediator _mediator = mediator;
     private readonly AppState _app = app;
 
     public async Task<Unit> Handle(DeviceInitAction request, CancellationToken ct)
     {
-        var resp = await _api.ListAsync(request.Page, request.PageSize, request.Query, request.Sort, request.Dir, ct);
-        if (resp.IsSuccessStatusCode && resp.Content is not null)
-        {
-            await _mediator.Publish(new DeviceInitEvent(resp.Content.Items, request.Page, request.PageSize, request.Query, request.Sort, request.Dir), ct);
-            return Unit.Value;
-        }
         try
         {
-            var pd = await resp.Error?.GetContentAsAsync<ProblemDetails>();
-            var title = pd?.Title ?? $"HTTP {(int)resp.StatusCode}";
-            _app.ToastError(title + (string.IsNullOrWhiteSpace(pd?.Detail) ? string.Empty : $": {pd.Detail}"));
+            var result = await _apiService.ListAsync(request.Page, request.PageSize, request.Query, request.Sort, request.Dir, ct);
+            if (result is not null)
+            {
+                await _mediator.Publish(new DeviceInitEvent(result.Items, request.Page, request.PageSize, request.Query, request.Sort, request.Dir), ct);
+            }
+            else
+            {
+                _app.ToastError("Failed to load Devices: No data returned");
+            }
         }
-        catch
+        catch (HttpRequestException ex)
         {
-            _app.ToastError($"HTTP {(int)resp.StatusCode}: {resp.ReasonPhrase}");
+            var statusCode = ex.StatusCode.HasValue ? $"HTTP {(int)ex.StatusCode.Value}" : "HTTP Error";
+            _app.ToastError($"{statusCode}: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            _app.ToastError($"Error loading Devices: {ex.Message}");
         }
         return Unit.Value;
     }

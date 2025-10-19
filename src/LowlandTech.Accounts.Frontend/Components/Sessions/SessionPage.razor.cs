@@ -6,14 +6,14 @@ public partial class SessionPage : ComponentBase, IDisposable
     [Inject] private IPermService Perms { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private SessionPageState PageState { get; set; } = default!;
-    [Inject] private ISessionApi Api { get; set; } = default!;
+    [Inject] private SessionApiService ApiService { get; set; } = default!;
 
     private Func<GridStateVirtualize<SessionDto>, CancellationToken, Task<GridData<SessionDto>>> _serverData = default!;
     private bool _canCreate;
 
     protected override async Task OnInitializedAsync()
     {
-        _serverData = SessionDataGridAdapter.CreateSessionServerData(Api, PageState);
+        _serverData = SessionDataGridAdapter.CreateSessionServerData(ApiService, PageState);
         PageState.ItemsChanged += OnSessionItemsChanged;
         _canCreate = await Perms.CanAsync("accounts::create");
         PageState.Changed += OnPagePrefsChanged;

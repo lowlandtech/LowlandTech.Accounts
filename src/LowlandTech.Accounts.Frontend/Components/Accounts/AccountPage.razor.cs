@@ -6,14 +6,14 @@ public partial class AccountPage : ComponentBase, IDisposable
     [Inject] private IPermService Perms { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private AccountPageState PageState { get; set; } = default!;
-    [Inject] private IAccountApi Api { get; set; } = default!;
+    [Inject] private AccountApiService ApiService { get; set; } = default!;
 
     private Func<GridStateVirtualize<AccountDto>, CancellationToken, Task<GridData<AccountDto>>> _serverData = default!;
     private bool _canCreate;
 
     protected override async Task OnInitializedAsync()
     {
-        _serverData = AccountDataGridAdapter.CreateAccountServerData(Api, PageState);
+        _serverData = AccountDataGridAdapter.CreateAccountServerData(ApiService, PageState);
         PageState.ItemsChanged += OnAccountItemsChanged;
         _canCreate = await Perms.CanAsync("accounts::create");
         PageState.Changed += OnPagePrefsChanged;

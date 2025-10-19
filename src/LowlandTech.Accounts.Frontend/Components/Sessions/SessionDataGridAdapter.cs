@@ -4,7 +4,7 @@ namespace LowlandTech.Accounts.Frontend.Components.Sessions;
 public static class SessionDataGridAdapter
 {
     public static Func<GridStateVirtualize<SessionDto>, CancellationToken, Task<GridData<SessionDto>>> 
-        CreateSessionServerData(ISessionApi api, SessionPageState pageState)
+        CreateSessionServerData(SessionApiService apiService, SessionPageState pageState)
     {
         return async (gridState, ct) =>
         {
@@ -26,7 +26,7 @@ public static class SessionDataGridAdapter
                 }
 
                 // Call the API
-                var response = await api.ListAsync(
+                var result = await apiService.ListAsync(
                     page, 
                     pageSize, 
                     searchString, 
@@ -35,23 +35,32 @@ public static class SessionDataGridAdapter
                     ct
                 );
 
-                if (response.IsSuccessStatusCode && response.Content != null)
+                if (result is not null)
                 {
                     return new GridData<SessionDto>
                     {
-                        Items = response.Content.Items,
-                        TotalItems = response.Content.TotalCount
+                        Items = result.Items,
+                        TotalItems = result.TotalCount
                     };
                 }
                 else
                 {
-                    pageState.ToastError($"Failed to load sessions: {response.Error?.Content}");
+                    pageState.ToastError($"Failed to load sessions: No data returned");
                     return new GridData<SessionDto>
                     {
                         Items = [],
                         TotalItems = 0
                     };
                 }
+            }
+            catch (HttpRequestException ex)
+            {
+                pageState.ToastError($"HTTP error loading sessions: {ex.Message}");
+                return new GridData<SessionDto>
+                {
+                    Items = [],
+                    TotalItems = 0
+                };
             }
             catch (Exception ex)
             {

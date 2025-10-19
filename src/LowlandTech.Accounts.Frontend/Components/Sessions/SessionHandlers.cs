@@ -1,31 +1,35 @@
-
 namespace LowlandTech.Accounts.Frontend.Components.Sessions;
 
 // INIT → calls API, then publishes InitEvent
-public sealed class SessionInitHandler(ISessionApi api, IMediator mediator, AppState app)
+public sealed class SessionInitHandler(SessionApiService apiService, IMediator mediator, AppState app)
     : IRequestHandler<SessionInitAction, Unit>
 {
-    private readonly ISessionApi _api = api;
+    private readonly SessionApiService _apiService = apiService;
     private readonly IMediator _mediator = mediator;
     private readonly AppState _app = app;
 
     public async Task<Unit> Handle(SessionInitAction request, CancellationToken ct)
     {
-        var resp = await _api.ListAsync(request.Page, request.PageSize, request.Query, request.Sort, request.Dir, ct);
-        if (resp.IsSuccessStatusCode && resp.Content is not null)
-        {
-            await _mediator.Publish(new SessionInitEvent(resp.Content.Items, request.Page, request.PageSize, request.Query, request.Sort, request.Dir), ct);
-            return Unit.Value;
-        }
         try
         {
-            var pd = await resp.Error?.GetContentAsAsync<ProblemDetails>();
-            var title = pd?.Title ?? $"HTTP {(int)resp.StatusCode}";
-            _app.ToastError(title + (string.IsNullOrWhiteSpace(pd?.Detail) ? string.Empty : $": {pd.Detail}"));
+            var result = await _apiService.ListAsync(request.Page, request.PageSize, request.Query, request.Sort, request.Dir, ct);
+            if (result is not null)
+            {
+                await _mediator.Publish(new SessionInitEvent(result.Items, request.Page, request.PageSize, request.Query, request.Sort, request.Dir), ct);
+            }
+            else
+            {
+                _app.ToastError("Failed to load Sessions: No data returned");
+            }
         }
-        catch
+        catch (HttpRequestException ex)
         {
-            _app.ToastError($"HTTP {(int)resp.StatusCode}: {resp.ReasonPhrase}");
+            var statusCode = ex.StatusCode.HasValue ? $"HTTP {(int)ex.StatusCode.Value}" : "HTTP Error";
+            _app.ToastError($"{statusCode}: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            _app.ToastError($"Error loading Sessions: {ex.Message}");
         }
         return Unit.Value;
     }

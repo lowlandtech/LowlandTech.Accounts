@@ -4,7 +4,7 @@ namespace LowlandTech.Accounts.Frontend.Components.PasswordResetTokens;
 public static class PasswordResetTokenDataGridAdapter
 {
     public static Func<GridStateVirtualize<PasswordResetTokenDto>, CancellationToken, Task<GridData<PasswordResetTokenDto>>> 
-        CreatePasswordResetTokenServerData(IPasswordResetTokenApi api, PasswordResetTokenPageState pageState)
+        CreatePasswordResetTokenServerData(PasswordResetTokenApiService apiService, PasswordResetTokenPageState pageState)
     {
         return async (gridState, ct) =>
         {
@@ -26,7 +26,7 @@ public static class PasswordResetTokenDataGridAdapter
                 }
 
                 // Call the API
-                var response = await api.ListAsync(
+                var result = await apiService.ListAsync(
                     page, 
                     pageSize, 
                     searchString, 
@@ -35,23 +35,32 @@ public static class PasswordResetTokenDataGridAdapter
                     ct
                 );
 
-                if (response.IsSuccessStatusCode && response.Content != null)
+                if (result is not null)
                 {
                     return new GridData<PasswordResetTokenDto>
                     {
-                        Items = response.Content.Items,
-                        TotalItems = response.Content.TotalCount
+                        Items = result.Items,
+                        TotalItems = result.TotalCount
                     };
                 }
                 else
                 {
-                    pageState.ToastError($"Failed to load passwordresettokens: {response.Error?.Content}");
+                    pageState.ToastError($"Failed to load passwordresettokens: No data returned");
                     return new GridData<PasswordResetTokenDto>
                     {
                         Items = [],
                         TotalItems = 0
                     };
                 }
+            }
+            catch (HttpRequestException ex)
+            {
+                pageState.ToastError($"HTTP error loading passwordresettokens: {ex.Message}");
+                return new GridData<PasswordResetTokenDto>
+                {
+                    Items = [],
+                    TotalItems = 0
+                };
             }
             catch (Exception ex)
             {

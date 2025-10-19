@@ -20,8 +20,8 @@ global using Refit;
 global using MudBlazor;
 global using MudBlazor.Services;
 
+global using LowlandTech.Accounts.Abstractions;
 global using LowlandTech.Accounts.Abstractions.Enums;
-global using LowlandTech.Accounts.Abstractions.Http;
 global using LowlandTech.Accounts.Abstractions.Store;
 global using LowlandTech.Accounts.Abstractions.Accounts;
 global using LowlandTech.Accounts.Abstractions.AccountPreferences;

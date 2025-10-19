@@ -4,7 +4,7 @@ namespace LowlandTech.Accounts.Frontend.Components.Accounts;
 public static class AccountDataGridAdapter
 {
     public static Func<GridStateVirtualize<AccountDto>, CancellationToken, Task<GridData<AccountDto>>> 
-        CreateAccountServerData(IAccountApi api, AccountPageState pageState)
+        CreateAccountServerData(AccountApiService apiService, AccountPageState pageState)
     {
         return async (gridState, ct) =>
         {
@@ -26,7 +26,7 @@ public static class AccountDataGridAdapter
                 }
 
                 // Call the API
-                var response = await api.ListAsync(
+                var result = await apiService.ListAsync(
                     page, 
                     pageSize, 
                     searchString, 
@@ -35,23 +35,32 @@ public static class AccountDataGridAdapter
                     ct
                 );
 
-                if (response.IsSuccessStatusCode && response.Content != null)
+                if (result is not null)
                 {
                     return new GridData<AccountDto>
                     {
-                        Items = response.Content.Items,
-                        TotalItems = response.Content.TotalCount
+                        Items = result.Items,
+                        TotalItems = result.TotalCount
                     };
                 }
                 else
                 {
-                    pageState.ToastError($"Failed to load accounts: {response.Error?.Content}");
+                    pageState.ToastError($"Failed to load accounts: No data returned");
                     return new GridData<AccountDto>
                     {
                         Items = [],
                         TotalItems = 0
                     };
                 }
+            }
+            catch (HttpRequestException ex)
+            {
+                pageState.ToastError($"HTTP error loading accounts: {ex.Message}");
+                return new GridData<AccountDto>
+                {
+                    Items = [],
+                    TotalItems = 0
+                };
             }
             catch (Exception ex)
             {

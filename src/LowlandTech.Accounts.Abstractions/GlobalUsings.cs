@@ -6,6 +6,9 @@ global using System.Linq;
 global using System.Threading;
 global using System.Threading.Tasks;
 global using System.ComponentModel.DataAnnotations;
+global using System.Net.Http.Json;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
 
 // === Misc. ===
 global using MediatR;
@@ -14,6 +17,9 @@ global using MudBlazor;
 
 // === Diagnostics / Attributes ===
 global using System.ComponentModel; // DescriptionAttribute etc.
+
+// === Microsoft libraries ===
+global using Microsoft.Extensions.Logging;
 
 // === This plugin’s contracts & domain ===
 global using LowlandTech.Accounts.Abstractions;

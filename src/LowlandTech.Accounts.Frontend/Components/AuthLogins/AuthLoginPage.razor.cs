@@ -6,14 +6,14 @@ public partial class AuthLoginPage : ComponentBase, IDisposable
     [Inject] private IPermService Perms { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private AuthLoginPageState PageState { get; set; } = default!;
-    [Inject] private IAuthLoginApi Api { get; set; } = default!;
+    [Inject] private AuthLoginApiService ApiService { get; set; } = default!;
 
     private Func<GridStateVirtualize<AuthLoginDto>, CancellationToken, Task<GridData<AuthLoginDto>>> _serverData = default!;
     private bool _canCreate;
 
     protected override async Task OnInitializedAsync()
     {
-        _serverData = AuthLoginDataGridAdapter.CreateAuthLoginServerData(Api, PageState);
+        _serverData = AuthLoginDataGridAdapter.CreateAuthLoginServerData(ApiService, PageState);
         PageState.ItemsChanged += OnAuthLoginItemsChanged;
         _canCreate = await Perms.CanAsync("accounts::create");
         PageState.Changed += OnPagePrefsChanged;

@@ -6,14 +6,14 @@ public partial class AuditEventPage : ComponentBase, IDisposable
     [Inject] private IPermService Perms { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private AuditEventPageState PageState { get; set; } = default!;
-    [Inject] private IAuditEventApi Api { get; set; } = default!;
+    [Inject] private AuditEventApiService ApiService { get; set; } = default!;
 
     private Func<GridStateVirtualize<AuditEventDto>, CancellationToken, Task<GridData<AuditEventDto>>> _serverData = default!;
     private bool _canCreate;
 
     protected override async Task OnInitializedAsync()
     {
-        _serverData = AuditEventDataGridAdapter.CreateAuditEventServerData(Api, PageState);
+        _serverData = AuditEventDataGridAdapter.CreateAuditEventServerData(ApiService, PageState);
         PageState.ItemsChanged += OnAuditEventItemsChanged;
         _canCreate = await Perms.CanAsync("accounts::create");
         PageState.Changed += OnPagePrefsChanged;

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -14,28 +14,16 @@
     <Company>LowlandTech</Company>
     <Description>Abstractions package for LowlandTech.Accounts plugins</Description>
     <PackageOutputPath>C:\Workspaces\Packages</PackageOutputPath>
-
-    <!-- Refit Source Generator Configuration -->
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\Generated</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
-
-  <!-- Make source-generated files visible in the project -->
-  <ItemGroup>
-    <Compile Include="$(CompilerGeneratedFilesOutputPath)\**\*.cs" Visible="true" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Lamar" Version="15.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.10" />
     <PackageReference Include="MediatR" Version="13.0.0" />
     <PackageReference Include="MudBlazor" Version="8.13.0" />
-
-    <!-- Refit for API client generation -->
-    <PackageReference Include="Refit" Version="8.0.0" />
-    <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
 
     <!-- Test infrastructure -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />

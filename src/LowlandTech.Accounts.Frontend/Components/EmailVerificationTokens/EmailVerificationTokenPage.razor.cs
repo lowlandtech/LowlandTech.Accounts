@@ -6,14 +6,14 @@ public partial class EmailVerificationTokenPage : ComponentBase, IDisposable
     [Inject] private IPermService Perms { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private EmailVerificationTokenPageState PageState { get; set; } = default!;
-    [Inject] private IEmailVerificationTokenApi Api { get; set; } = default!;
+    [Inject] private EmailVerificationTokenApiService ApiService { get; set; } = default!;
 
     private Func<GridStateVirtualize<EmailVerificationTokenDto>, CancellationToken, Task<GridData<EmailVerificationTokenDto>>> _serverData = default!;
     private bool _canCreate;
 
     protected override async Task OnInitializedAsync()
     {
-        _serverData = EmailVerificationTokenDataGridAdapter.CreateEmailVerificationTokenServerData(Api, PageState);
+        _serverData = EmailVerificationTokenDataGridAdapter.CreateEmailVerificationTokenServerData(ApiService, PageState);
         PageState.ItemsChanged += OnEmailVerificationTokenItemsChanged;
         _canCreate = await Perms.CanAsync("accounts::create");
         PageState.Changed += OnPagePrefsChanged;

@@ -6,14 +6,14 @@ public partial class RecoveryCodePage : ComponentBase, IDisposable
     [Inject] private IPermService Perms { get; set; } = default!;
     [Inject] private IJSRuntime JS { get; set; } = default!;
     [Inject] private RecoveryCodePageState PageState { get; set; } = default!;
-    [Inject] private IRecoveryCodeApi Api { get; set; } = default!;
+    [Inject] private RecoveryCodeApiService ApiService { get; set; } = default!;
 
     private Func<GridStateVirtualize<RecoveryCodeDto>, CancellationToken, Task<GridData<RecoveryCodeDto>>> _serverData = default!;
     private bool _canCreate;
 
     protected override async Task OnInitializedAsync()
     {
-        _serverData = RecoveryCodeDataGridAdapter.CreateRecoveryCodeServerData(Api, PageState);
+        _serverData = RecoveryCodeDataGridAdapter.CreateRecoveryCodeServerData(ApiService, PageState);
         PageState.ItemsChanged += OnRecoveryCodeItemsChanged;
         _canCreate = await Perms.CanAsync("accounts::create");
         PageState.Changed += OnPagePrefsChanged;

@@ -4,7 +4,7 @@ namespace LowlandTech.Accounts.Frontend.Components.EmailVerificationTokens;
 public static class EmailVerificationTokenDataGridAdapter
 {
     public static Func<GridStateVirtualize<EmailVerificationTokenDto>, CancellationToken, Task<GridData<EmailVerificationTokenDto>>> 
-        CreateEmailVerificationTokenServerData(IEmailVerificationTokenApi api, EmailVerificationTokenPageState pageState)
+        CreateEmailVerificationTokenServerData(EmailVerificationTokenApiService apiService, EmailVerificationTokenPageState pageState)
     {
         return async (gridState, ct) =>
         {
@@ -26,7 +26,7 @@ public static class EmailVerificationTokenDataGridAdapter
                 }
 
                 // Call the API
-                var response = await api.ListAsync(
+                var result = await apiService.ListAsync(
                     page, 
                     pageSize, 
                     searchString, 
@@ -35,23 +35,32 @@ public static class EmailVerificationTokenDataGridAdapter
                     ct
                 );
 
-                if (response.IsSuccessStatusCode && response.Content != null)
+                if (result is not null)
                 {
                     return new GridData<EmailVerificationTokenDto>
                     {
-                        Items = response.Content.Items,
-                        TotalItems = response.Content.TotalCount
+                        Items = result.Items,
+                        TotalItems = result.TotalCount
                     };
                 }
                 else
                 {
-                    pageState.ToastError($"Failed to load emailverificationtokens: {response.Error?.Content}");
+                    pageState.ToastError($"Failed to load emailverificationtokens: No data returned");
                     return new GridData<EmailVerificationTokenDto>
                     {
                         Items = [],
                         TotalItems = 0
                     };
                 }
+            }
+            catch (HttpRequestException ex)
+            {
+                pageState.ToastError($"HTTP error loading emailverificationtokens: {ex.Message}");
+                return new GridData<EmailVerificationTokenDto>
+                {
+                    Items = [],
+                    TotalItems = 0
+                };
             }
             catch (Exception ex)
             {

@@ -4,7 +4,7 @@ namespace LowlandTech.Accounts.Frontend.Components.AuthLogins;
 public static class AuthLoginDataGridAdapter
 {
     public static Func<GridStateVirtualize<AuthLoginDto>, CancellationToken, Task<GridData<AuthLoginDto>>> 
-        CreateAuthLoginServerData(IAuthLoginApi api, AuthLoginPageState pageState)
+        CreateAuthLoginServerData(AuthLoginApiService apiService, AuthLoginPageState pageState)
     {
         return async (gridState, ct) =>
         {
@@ -26,7 +26,7 @@ public static class AuthLoginDataGridAdapter
                 }
 
                 // Call the API
-                var response = await api.ListAsync(
+                var result = await apiService.ListAsync(
                     page, 
                     pageSize, 
                     searchString, 
@@ -35,23 +35,32 @@ public static class AuthLoginDataGridAdapter
                     ct
                 );
 
-                if (response.IsSuccessStatusCode && response.Content != null)
+                if (result is not null)
                 {
                     return new GridData<AuthLoginDto>
                     {
-                        Items = response.Content.Items,
-                        TotalItems = response.Content.TotalCount
+                        Items = result.Items,
+                        TotalItems = result.TotalCount
                     };
                 }
                 else
                 {
-                    pageState.ToastError($"Failed to load authlogins: {response.Error?.Content}");
+                    pageState.ToastError($"Failed to load authlogins: No data returned");
                     return new GridData<AuthLoginDto>
                     {
                         Items = [],
                         TotalItems = 0
                     };
                 }
+            }
+            catch (HttpRequestException ex)
+            {
+                pageState.ToastError($"HTTP error loading authlogins: {ex.Message}");
+                return new GridData<AuthLoginDto>
+                {
+                    Items = [],
+                    TotalItems = 0
+                };
             }
             catch (Exception ex)
             {

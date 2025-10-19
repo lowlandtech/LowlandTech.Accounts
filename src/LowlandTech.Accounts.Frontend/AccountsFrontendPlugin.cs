@@ -27,9 +27,9 @@ public sealed class AccountsFrontendPlugin
         services.AddSingleton<RecoveryCodePageState>();
         services.AddSingleton<SessionPageState>();
 
-        // Refit API clients from Abstractions
+        // API services from Abstractions
         var baseAddress = config["WebApi:BaseAddress"] ?? "/";
-        services.AddPluginApiClients(baseAddress);
+        services.AddPluginApiServices(baseAddress);
 
         // Authorization: default policy mapping is in the Shell; we only read claims via IPermService.
         services.AddScoped<IPermService, PermService>();

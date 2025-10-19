@@ -4,7 +4,7 @@ namespace LowlandTech.Accounts.Frontend.Components.AuditEvents;
 public static class AuditEventDataGridAdapter
 {
     public static Func<GridStateVirtualize<AuditEventDto>, CancellationToken, Task<GridData<AuditEventDto>>> 
-        CreateAuditEventServerData(IAuditEventApi api, AuditEventPageState pageState)
+        CreateAuditEventServerData(AuditEventApiService apiService, AuditEventPageState pageState)
     {
         return async (gridState, ct) =>
         {
@@ -26,7 +26,7 @@ public static class AuditEventDataGridAdapter
                 }
 
                 // Call the API
-                var response = await api.ListAsync(
+                var result = await apiService.ListAsync(
                     page, 
                     pageSize, 
                     searchString, 
@@ -35,23 +35,32 @@ public static class AuditEventDataGridAdapter
                     ct
                 );
 
-                if (response.IsSuccessStatusCode && response.Content != null)
+                if (result is not null)
                 {
                     return new GridData<AuditEventDto>
                     {
-                        Items = response.Content.Items,
-                        TotalItems = response.Content.TotalCount
+                        Items = result.Items,
+                        TotalItems = result.TotalCount
                     };
                 }
                 else
                 {
-                    pageState.ToastError($"Failed to load auditevents: {response.Error?.Content}");
+                    pageState.ToastError($"Failed to load auditevents: No data returned");
                     return new GridData<AuditEventDto>
                     {
                         Items = [],
                         TotalItems = 0
                     };
                 }
+            }
+            catch (HttpRequestException ex)
+            {
+                pageState.ToastError($"HTTP error loading auditevents: {ex.Message}");
+                return new GridData<AuditEventDto>
+                {
+                    Items = [],
+                    TotalItems = 0
+                };
             }
             catch (Exception ex)
             {
