@@ -1,0 +1,55 @@
+
+<MudStack Spacing="2">
+  <MudStack Row Spacing="1" AlignItems="AlignItems.Center">
+    @if (State.ViewState == ViewStates.Viewing)
+    {
+      <MudButton Variant="Variant.Outlined" Color="Color.Primary" Disabled="@(!CanEdit)" OnClick="BeginEdit">Edit</MudButton>
+      <MudButton Variant="Variant.Outlined" Color="Color.Error" Disabled="@(!CanDelete)" OnClick="OnDeleteAsync">Delete</MudButton>
+      <MudSpacer />
+      <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_canCreate)" OnClick="BeginAdd">Add Session</MudButton>
+    }
+    else
+    {
+      <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!CanSave)" OnClick="OnSaveAsync">Save</MudButton>
+      <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="CancelEdit">Cancel</MudButton>
+    }
+  </MudStack>
+
+  @if (State.Selected is null)
+  {
+    <MudAlert Severity="Severity.Info">No selection.</MudAlert>
+  }
+  else
+  {
+    <EditForm Model="@State.Selected">
+      <MudPaper Class="pa-4" Elevation="1">
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudTextField T="Guid" @bind-Value="State.Selected.Id" Label="Id" ReadOnly Disabled Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudTextField T="string" @bind-Value="State.Selected.Name" Label="Name" ReadOnly="@IsReadOnly" Disabled="@IsReadOnly" Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudSwitch T="bool" @bind-Checked="State.Selected.IsActive" Disabled="@IsReadOnly">IsActive</MudSwitch>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudTextField T="Guid" @bind-Value="State.Selected.AccountId" Label="AccountId" ReadOnly Disabled Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudTextField T="string" @bind-Value="State.Selected.DeviceId" Label="DeviceId" ReadOnly="@IsReadOnly" Disabled="@IsReadOnly" Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudDatePicker @bind-Date="State.Selected.CreatedUtc" Label="CreatedUtc" ReadOnly="@IsReadOnly" Disabled="@IsReadOnly" Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudDatePicker @bind-Date="State.Selected.ExpiresUtc" Label="ExpiresUtc" ReadOnly="@IsReadOnly" Disabled="@IsReadOnly" Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudDatePicker @bind-Date="State.Selected.RevokedUtc" Label="RevokedUtc" ReadOnly="@IsReadOnly" Disabled="@IsReadOnly" Margin="Margin.Dense" />
+            </MudItem>
+        </MudGrid>
+      </MudPaper>
+    </EditForm>
+  }
+</MudStack>

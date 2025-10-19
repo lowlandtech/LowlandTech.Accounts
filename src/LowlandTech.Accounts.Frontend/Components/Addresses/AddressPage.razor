@@ -1,0 +1,63 @@
+@page "/accounts/addresses"
+@attribute [Authorize]
+
+<MudSplitter Class="pa-2" EnableMargin="true" EnableSlide="true" Dimension="50">
+  <StartContent>
+    <MudStack Spacing="2">
+      <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+        <MudSwitch @bind-Value="PageState.Dense">Dense</MudSwitch>
+        <MudSwitch @bind-Value="PageState.DragDropColumnReordering">Reorder Columns</MudSwitch>
+        <MudSwitch @bind-Value="PageState.ApplyDropClassesOnDragStarted">Drop Classes On Drag</MudSwitch>
+      </MudStack>
+
+      <MudTextField @bind-Value="PageState.Query" Placeholder="Search…" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Dense Immediate OnBlurred="_ => Reload()" />
+
+      <MudDataGrid T="AddressDto"
+          VirtualizeServerData="@_serverData"
+          Virtualize="true"
+          Filterable
+          FixedHeader
+          Dense="@PageState.Dense"
+          DragDropColumnReordering="@PageState.DragDropColumnReordering"
+          ApplyDropClassesOnDragStarted="@PageState.ApplyDropClassesOnDragStarted"
+          DragIndicatorIcon="@PageState.DragIndicatorIcon"
+          ColumnResizeMode="ResizeMode.Container"
+          Height="65vh"
+          ItemSize="52.68f">
+          <Columns>
+            <SelectColumn T="AddressDto" />
+            <PropertyColumn Property="x => x.Id" Title="Id" />
+            <PropertyColumn Property="x => x.Name" Title="Name" />
+            <PropertyColumn Property="x => x.IsActive" Title="IsActive" />
+            <PropertyColumn Property="x => x.AccountId" Title="AccountId" />
+            <PropertyColumn Property="x => x.Kind" Title="Kind" />
+            <PropertyColumn Property="x => x.Line1" Title="Line1" />
+        </Columns>
+        <RowLoadingContent>
+          <tr class="mud-table-row"><td class="mud-table-cell" colspan="1000">Loading…</td></tr>
+        </RowLoadingContent>
+        <NoRecordsContent>
+          <tr class="mud-table-row"><td class="mud-table-cell" colspan="1000">No results</td></tr>
+        </NoRecordsContent>
+      </MudDataGrid>
+
+      <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+        @if (_canCreate) { <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="PageState.BeginAdd">Add Address</MudButton> }
+      </MudStack>
+    </MudStack>
+  </StartContent>
+
+  <EndContent>
+    <MudPaper Class="pa-3" Elevation="1">
+      @if (PageState.ViewState == ViewStates.Viewing)
+      {
+        <MudAlert Severity="Severity.Info">Select a Address to view or edit, or click Add.</MudAlert>
+      }
+      else if (PageState.ViewState == ViewStates.Editing || PageState.ViewState == ViewStates.Adding)
+      {
+        <AddressEdit />
+      }
+    </MudPaper>
+  </EndContent>
+</MudSplitter>
+

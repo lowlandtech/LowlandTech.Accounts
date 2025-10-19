@@ -1,0 +1,22 @@
+
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>preview</LangVersion>
+    <RootNamespace>LowlandTech.Accounts.Tests</RootNamespace>
+    <AssemblyName>LowlandTech.Accounts.Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageReference Include="Shouldly" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup><!-- ProjectReference Include="..\Other\Other.csproj" /> -->
+  
+    <ProjectReference Include="..\..\src\LowlandTech.Accounts.Abstractions\LowlandTech.Accounts.Abstractions.csproj" />
+  
+    <ProjectReference Include="..\..\src\LowlandTech.Accounts.Domain\LowlandTech.Accounts.Domain.csproj" />
+  </ItemGroup>
+</Project>

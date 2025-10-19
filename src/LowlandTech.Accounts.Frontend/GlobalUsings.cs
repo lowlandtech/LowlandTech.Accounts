@@ -1,0 +1,54 @@
+global using System;
+global using System.Linq;
+global using System.Collections.Generic;
+global using System.Net.Http;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
+global using System.Threading;
+global using System.Threading.Tasks;
+
+global using Microsoft.JSInterop;
+global using Microsoft.AspNetCore.Components.Authorization;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Components;
+
+global using Lamar;
+global using MediatR;
+global using Refit;
+global using MudBlazor;
+global using MudBlazor.Services;
+
+global using LowlandTech.Accounts.Abstractions.Enums;
+global using LowlandTech.Accounts.Abstractions.Http;
+global using LowlandTech.Accounts.Abstractions.Store;
+global using LowlandTech.Accounts.Abstractions.Accounts;
+global using LowlandTech.Accounts.Abstractions.AccountPreferences;
+global using LowlandTech.Accounts.Abstractions.Addresses;
+global using LowlandTech.Accounts.Abstractions.ApiKeys;
+global using LowlandTech.Accounts.Abstractions.AuditEvents;
+global using LowlandTech.Accounts.Abstractions.AuthLogins;
+global using LowlandTech.Accounts.Abstractions.Devices;
+global using LowlandTech.Accounts.Abstractions.EmailVerificationTokens;
+global using LowlandTech.Accounts.Abstractions.PasswordResetTokens;
+global using LowlandTech.Accounts.Abstractions.RecoveryCodes;
+global using LowlandTech.Accounts.Abstractions.Sessions;
+global using LowlandTech.Accounts.Frontend.Infrastructure.Auth;
+global using LowlandTech.Accounts.Frontend.Infrastructure.State;
+global using LowlandTech.Accounts.Frontend.Infrastructure.State.Tables;
+global using LowlandTech.Accounts.Frontend.Infrastructure.Http;
+
+// Razor components
+global using LowlandTech.Accounts.Frontend.Components;
+global using LowlandTech.Accounts.Frontend.Components.Accounts;
+global using LowlandTech.Accounts.Frontend.Components.AccountPreferences;
+global using LowlandTech.Accounts.Frontend.Components.Addresses;
+global using LowlandTech.Accounts.Frontend.Components.ApiKeys;
+global using LowlandTech.Accounts.Frontend.Components.AuditEvents;
+global using LowlandTech.Accounts.Frontend.Components.AuthLogins;
+global using LowlandTech.Accounts.Frontend.Components.Devices;
+global using LowlandTech.Accounts.Frontend.Components.EmailVerificationTokens;
+global using LowlandTech.Accounts.Frontend.Components.PasswordResetTokens;
+global using LowlandTech.Accounts.Frontend.Components.RecoveryCodes;
+global using LowlandTech.Accounts.Frontend.Components.Sessions;
