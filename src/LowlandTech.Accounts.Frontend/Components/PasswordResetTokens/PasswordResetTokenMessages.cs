@@ -1,5 +1,5 @@
 
-namespace LowlandTech.Accounts.Frontend.Infrastructure.State.Tables;
+namespace LowlandTech.Accounts.Frontend.Components.PasswordResetTokens;
 
 // Actions & Events for PasswordResetToken
 // These are table-prefixed to avoid collisions across plugins/tables.

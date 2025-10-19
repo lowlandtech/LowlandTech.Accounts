@@ -35,8 +35,6 @@ global using LowlandTech.Accounts.Abstractions.PasswordResetTokens;
 global using LowlandTech.Accounts.Abstractions.RecoveryCodes;
 global using LowlandTech.Accounts.Abstractions.Sessions;
 global using LowlandTech.Accounts.Frontend.Infrastructure.Auth;
-global using LowlandTech.Accounts.Frontend.Infrastructure.State;
-global using LowlandTech.Accounts.Frontend.Infrastructure.State.Tables;
 
 // Razor components
 global using LowlandTech.Accounts.Frontend.Components;
