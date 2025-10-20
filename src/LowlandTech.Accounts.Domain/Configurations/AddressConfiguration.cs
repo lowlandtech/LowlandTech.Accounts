@@ -15,8 +15,8 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
         b.Property(x => x.PostalCode).HasMaxLength(250);
         b.Property(x => x.Country).HasMaxLength(250);
     
-        // OneToMany Address (dep) → Account (principal) via FK AccountId
-        b.HasOne<Account>(x => x.Account)
+        // OneToMany Address (dep) → UserAccount (principal) via FK AccountId
+        b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.Addresses)
             .HasForeignKey(x => x.AccountId)
             .OnDelete(DeleteBehavior.Cascade);

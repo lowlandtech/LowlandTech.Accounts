@@ -9,8 +9,8 @@ public class PasswordResetTokenConfiguration : IEntityTypeConfiguration<Password
         b.Property(x => x.IsActive).HasDefaultValue(true);
         b.Property(x => x.Token).HasMaxLength(250);
     
-        // OneToMany PasswordResetToken (dep) → Account (principal) via FK AccountId
-        b.HasOne<Account>(x => x.Account)
+        // OneToMany PasswordResetToken (dep) → UserAccount (principal) via FK AccountId
+        b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.ResetTokens)
             .HasForeignKey(x => x.AccountId)
             .OnDelete(DeleteBehavior.Cascade);

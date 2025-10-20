@@ -10,8 +10,8 @@ public class RecoveryCodeConfiguration : IEntityTypeConfiguration<RecoveryCode>
         b.Property(x => x.Code).HasMaxLength(250);
         b.Property(x => x.CodeHash).HasMaxLength(250);
     
-        // OneToMany RecoveryCode (dep) → Account (principal) via FK AccountId
-        b.HasOne<Account>(x => x.Account)
+        // OneToMany RecoveryCode (dep) → UserAccount (principal) via FK AccountId
+        b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.RecoveryCodes)
             .HasForeignKey(x => x.AccountId)
             .OnDelete(DeleteBehavior.Cascade);

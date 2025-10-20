@@ -17,15 +17,6 @@ public static class ApiServicesRegistration
     {
         var baseUri = new Uri(baseAddress, UriKind.RelativeOrAbsolute);
 
-        // Register AccountApiService
-        services.AddHttpClient<Accounts.AccountApiService>(client =>
-        {
-            if (baseUri.IsAbsoluteUri)
-                client.BaseAddress = baseUri;
-            else
-                client.BaseAddress = new Uri(baseAddress, UriKind.Relative);
-        });
-
         // Register AccountPreferenceApiService
         services.AddHttpClient<AccountPreferences.AccountPreferenceApiService>(client =>
         {
@@ -109,6 +100,15 @@ public static class ApiServicesRegistration
 
         // Register SessionApiService
         services.AddHttpClient<Sessions.SessionApiService>(client =>
+        {
+            if (baseUri.IsAbsoluteUri)
+                client.BaseAddress = baseUri;
+            else
+                client.BaseAddress = new Uri(baseAddress, UriKind.Relative);
+        });
+
+        // Register UserAccountApiService
+        services.AddHttpClient<UserAccounts.UserAccountApiService>(client =>
         {
             if (baseUri.IsAbsoluteUri)
                 client.BaseAddress = baseUri;

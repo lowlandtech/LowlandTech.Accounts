@@ -29,6 +29,6 @@ public partial class Device
     
     public bool IsTrusted { get; set; }
     
-    // FK: AccountId → Account.Id
-    public virtual Account Account { get; set; }
+    // FK: AccountId → UserAccount.Id
+    public virtual UserAccount UserAccount { get; set; }
 }

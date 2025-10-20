@@ -9,8 +9,8 @@ public class EmailVerificationTokenConfiguration : IEntityTypeConfiguration<Emai
         b.Property(x => x.IsActive).HasDefaultValue(true);
         b.Property(x => x.Token).HasMaxLength(250);
     
-        // OneToMany EmailVerificationToken (dep) → Account (principal) via FK AccountId
-        b.HasOne<Account>(x => x.Account)
+        // OneToMany EmailVerificationToken (dep) → UserAccount (principal) via FK AccountId
+        b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.EmailTokens)
             .HasForeignKey(x => x.AccountId)
             .OnDelete(DeleteBehavior.Cascade);

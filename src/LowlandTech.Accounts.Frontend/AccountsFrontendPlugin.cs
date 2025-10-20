@@ -15,7 +15,6 @@ public sealed class AccountsFrontendPlugin
         services.AddScoped<AppState>();
 
         // Table stores as singletons
-        services.AddSingleton<AccountPageState>();
         services.AddSingleton<AccountPreferencePageState>();
         services.AddSingleton<AddressPageState>();
         services.AddSingleton<ApiKeyPageState>();
@@ -26,6 +25,7 @@ public sealed class AccountsFrontendPlugin
         services.AddSingleton<PasswordResetTokenPageState>();
         services.AddSingleton<RecoveryCodePageState>();
         services.AddSingleton<SessionPageState>();
+        services.AddSingleton<UserAccountPageState>();
 
         // API services from Abstractions
         var baseAddress = config["WebApi:BaseAddress"] ?? "/";

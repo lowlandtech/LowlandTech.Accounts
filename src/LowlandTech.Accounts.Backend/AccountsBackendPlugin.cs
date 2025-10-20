@@ -32,10 +32,6 @@ public sealed class AccountsBackendPlugin : Plugin
         services.AddAuthorization(options =>
         {
             // Generated policies per table
-            options.AddPolicy("account::read",    policy => policy.Requirements.Add(new PermissionRequirement("account::read")));
-            options.AddPolicy("account::create",  policy => policy.Requirements.Add(new PermissionRequirement("account::create")));
-            options.AddPolicy("account::update",  policy => policy.Requirements.Add(new PermissionRequirement("account::update")));
-            options.AddPolicy("account::delete",  policy => policy.Requirements.Add(new PermissionRequirement("account::delete")));
             options.AddPolicy("accountpreference::read",    policy => policy.Requirements.Add(new PermissionRequirement("accountpreference::read")));
             options.AddPolicy("accountpreference::create",  policy => policy.Requirements.Add(new PermissionRequirement("accountpreference::create")));
             options.AddPolicy("accountpreference::update",  policy => policy.Requirements.Add(new PermissionRequirement("accountpreference::update")));
@@ -76,6 +72,10 @@ public sealed class AccountsBackendPlugin : Plugin
             options.AddPolicy("session::create",  policy => policy.Requirements.Add(new PermissionRequirement("session::create")));
             options.AddPolicy("session::update",  policy => policy.Requirements.Add(new PermissionRequirement("session::update")));
             options.AddPolicy("session::delete",  policy => policy.Requirements.Add(new PermissionRequirement("session::delete")));
+            options.AddPolicy("useraccount::read",    policy => policy.Requirements.Add(new PermissionRequirement("useraccount::read")));
+            options.AddPolicy("useraccount::create",  policy => policy.Requirements.Add(new PermissionRequirement("useraccount::create")));
+            options.AddPolicy("useraccount::update",  policy => policy.Requirements.Add(new PermissionRequirement("useraccount::update")));
+            options.AddPolicy("useraccount::delete",  policy => policy.Requirements.Add(new PermissionRequirement("useraccount::delete")));
         });
 
         services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();

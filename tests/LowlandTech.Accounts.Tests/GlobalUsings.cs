@@ -37,12 +37,20 @@ global using Bunit.TestDoubles;
 // Playwright for E2E testing
 global using Microsoft.Playwright;
 
+// LowlandTech.Abstractions for use cases
+global using LowlandTech.Abstractions.UseCases;
+
 // Test infrastructure from Abstractions
 global using LowlandTech.Accounts.Abstractions.Features;
 
 // Domain entities and DTOs
 global using LowlandTech.Accounts.Domain;
 global using LowlandTech.Accounts.Domain.Entities;
+global using LowlandTech.Accounts.Domain.Extensions;
 
-// Test fakes and helpers
+// Sample API for integration testing
+global using LowlandTech.Accounts.SampleApi;
+
+// Test fakes, helpers, and use cases
 global using LowlandTech.Accounts.Tests.Fakes;
+global using LowlandTech.Accounts.Tests.UseCases;

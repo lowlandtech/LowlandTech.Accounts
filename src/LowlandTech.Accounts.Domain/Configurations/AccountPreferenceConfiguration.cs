@@ -11,8 +11,8 @@ public class AccountPreferenceConfiguration : IEntityTypeConfiguration<AccountPr
         b.Property(x => x.Value).HasMaxLength(250);
         b.Property(x => x.ValueType).HasMaxLength(250);
     
-        // OneToMany AccountPreference (dep) → Account (principal) via FK AccountId
-        b.HasOne<Account>(x => x.Account)
+        // OneToMany AccountPreference (dep) → UserAccount (principal) via FK AccountId
+        b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.Preferences)
             .HasForeignKey(x => x.AccountId)
             .OnDelete(DeleteBehavior.Cascade);

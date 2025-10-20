@@ -25,7 +25,7 @@ Feature: Email verification & password mgmt
         Given a pending verification token for the account
         When they verify email
           Then Event EmailVerified                                                              # UAC003
-          Then State Account                                                                    # UAC004
+          Then State UserAccount                                                                # UAC004
           Then State EmailVerificationToken                                                     # UAC005
     # ---------------------------------------------------------------
     # SC03 - PASSWORD_RESET

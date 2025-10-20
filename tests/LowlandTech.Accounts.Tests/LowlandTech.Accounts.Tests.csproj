@@ -16,11 +16,14 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageReference Include="bunit" Version="1.40.0" />
     <PackageReference Include="Microsoft.Playwright" Version="1.55.0" />
+    <PackageReference Include="LowlandTech.Abstractions" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup><!-- ProjectReference Include="..\Other\Other.csproj" /> -->
   
     <ProjectReference Include="..\..\src\LowlandTech.Accounts.Abstractions\LowlandTech.Accounts.Abstractions.csproj" />
   
     <ProjectReference Include="..\..\src\LowlandTech.Accounts.Domain\LowlandTech.Accounts.Domain.csproj" />
+  
+    <ProjectReference Include="..\..\samples\LowlandTech.Accounts.SampleApi\LowlandTech.Accounts.SampleApi.csproj" />
   </ItemGroup>
 </Project>

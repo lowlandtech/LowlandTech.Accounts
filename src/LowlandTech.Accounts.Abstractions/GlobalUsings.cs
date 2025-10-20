@@ -24,7 +24,6 @@ global using Microsoft.Extensions.Logging;
 // === This plugin’s contracts & domain ===
 global using LowlandTech.Accounts.Abstractions;
 global using LowlandTech.Accounts.Abstractions.Enums;
-global using LowlandTech.Accounts.Abstractions.Accounts;
 global using LowlandTech.Accounts.Abstractions.AccountPreferences;
 global using LowlandTech.Accounts.Abstractions.Addresses;
 global using LowlandTech.Accounts.Abstractions.ApiKeys;
@@ -35,4 +34,5 @@ global using LowlandTech.Accounts.Abstractions.EmailVerificationTokens;
 global using LowlandTech.Accounts.Abstractions.PasswordResetTokens;
 global using LowlandTech.Accounts.Abstractions.RecoveryCodes;
 global using LowlandTech.Accounts.Abstractions.Sessions;
+global using LowlandTech.Accounts.Abstractions.UserAccounts;
 

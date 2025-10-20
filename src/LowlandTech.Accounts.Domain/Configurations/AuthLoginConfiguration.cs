@@ -13,8 +13,8 @@ public class AuthLoginConfiguration : IEntityTypeConfiguration<AuthLogin>
         b.Property(x => x.RefreshToken).HasMaxLength(250);
         b.Property(x => x.Scopes).HasMaxLength(250);
     
-        // OneToMany AuthLogin (dep) → Account (principal) via FK AccountId
-        b.HasOne<Account>(x => x.Account)
+        // OneToMany AuthLogin (dep) → UserAccount (principal) via FK AccountId
+        b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.AuthLogins)
             .HasForeignKey(x => x.AccountId)
             .OnDelete(DeleteBehavior.Cascade);

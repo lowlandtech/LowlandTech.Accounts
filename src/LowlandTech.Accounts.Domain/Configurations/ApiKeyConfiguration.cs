@@ -11,8 +11,8 @@ public class ApiKeyConfiguration : IEntityTypeConfiguration<ApiKey>
         b.Property(x => x.KeyHash).HasMaxLength(250);
         b.Property(x => x.KeyPrefix).HasMaxLength(250);
     
-        // OneToMany ApiKey (dep) → Account (principal) via FK AccountId
-        b.HasOne<Account>(x => x.Account)
+        // OneToMany ApiKey (dep) → UserAccount (principal) via FK AccountId
+        b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.ApiKeys)
             .HasForeignKey(x => x.AccountId)
             .OnDelete(DeleteBehavior.Cascade);

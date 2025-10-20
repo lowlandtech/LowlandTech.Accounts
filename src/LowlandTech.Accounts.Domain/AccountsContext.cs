@@ -6,7 +6,6 @@ public class AccountsContext : DbContext
     public AccountsContext(DbContextOptions options) : base(options) { }
     public AccountsContext() : this(new DbContextOptions<AccountsContext>()) { }
 
-    public DbSet<Account> Accounts => Set<Account>();
     public DbSet<AccountPreference> AccountPreferences => Set<AccountPreference>();
     public DbSet<Address> Addresses => Set<Address>();
     public DbSet<ApiKey> ApiKeys => Set<ApiKey>();
@@ -17,10 +16,10 @@ public class AccountsContext : DbContext
     public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
     public DbSet<RecoveryCode> RecoveryCodes => Set<RecoveryCode>();
     public DbSet<Session> Sessions => Set<Session>();
+    public DbSet<UserAccount> UserAccounts => Set<UserAccount>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new AccountConfiguration());
         modelBuilder.ApplyConfiguration(new AccountPreferenceConfiguration());
         modelBuilder.ApplyConfiguration(new AddressConfiguration());
         modelBuilder.ApplyConfiguration(new ApiKeyConfiguration());
@@ -31,5 +30,6 @@ public class AccountsContext : DbContext
         modelBuilder.ApplyConfiguration(new PasswordResetTokenConfiguration());
         modelBuilder.ApplyConfiguration(new RecoveryCodeConfiguration());
         modelBuilder.ApplyConfiguration(new SessionConfiguration());
+        modelBuilder.ApplyConfiguration(new UserAccountConfiguration());
     }
 }

@@ -12,8 +12,8 @@ public class AuditEventConfiguration : IEntityTypeConfiguration<AuditEvent>
         b.Property(x => x.DeviceId).HasMaxLength(250);
         b.Property(x => x.Ip).HasMaxLength(250);
     
-        // OneToMany AuditEvent (dep) → Account (principal) via FK AccountId
-        b.HasOne<Account>(x => x.Account)
+        // OneToMany AuditEvent (dep) → UserAccount (principal) via FK AccountId
+        b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.AuditEvents)
             .HasForeignKey(x => x.AccountId)
             .OnDelete(DeleteBehavior.Cascade);

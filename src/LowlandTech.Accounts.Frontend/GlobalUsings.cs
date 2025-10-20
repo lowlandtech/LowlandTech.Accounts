@@ -23,7 +23,6 @@ global using MudBlazor.Services;
 global using LowlandTech.Accounts.Abstractions;
 global using LowlandTech.Accounts.Abstractions.Enums;
 global using LowlandTech.Accounts.Abstractions.Store;
-global using LowlandTech.Accounts.Abstractions.Accounts;
 global using LowlandTech.Accounts.Abstractions.AccountPreferences;
 global using LowlandTech.Accounts.Abstractions.Addresses;
 global using LowlandTech.Accounts.Abstractions.ApiKeys;
@@ -34,11 +33,11 @@ global using LowlandTech.Accounts.Abstractions.EmailVerificationTokens;
 global using LowlandTech.Accounts.Abstractions.PasswordResetTokens;
 global using LowlandTech.Accounts.Abstractions.RecoveryCodes;
 global using LowlandTech.Accounts.Abstractions.Sessions;
+global using LowlandTech.Accounts.Abstractions.UserAccounts;
 global using LowlandTech.Accounts.Frontend.Infrastructure.Auth;
 
 // Razor components
 global using LowlandTech.Accounts.Frontend.Components;
-global using LowlandTech.Accounts.Frontend.Components.Accounts;
 global using LowlandTech.Accounts.Frontend.Components.AccountPreferences;
 global using LowlandTech.Accounts.Frontend.Components.Addresses;
 global using LowlandTech.Accounts.Frontend.Components.ApiKeys;
@@ -49,3 +48,4 @@ global using LowlandTech.Accounts.Frontend.Components.EmailVerificationTokens;
 global using LowlandTech.Accounts.Frontend.Components.PasswordResetTokens;
 global using LowlandTech.Accounts.Frontend.Components.RecoveryCodes;
 global using LowlandTech.Accounts.Frontend.Components.Sessions;
+global using LowlandTech.Accounts.Frontend.Components.UserAccounts;

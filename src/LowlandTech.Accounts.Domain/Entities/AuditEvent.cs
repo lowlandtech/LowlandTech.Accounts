@@ -28,6 +28,6 @@ public partial class AuditEvent
     
     public DateTime? CreatedUtc { get; set; }
     
-    // FK: AccountId → Account.Id
-    public virtual Account? Account { get; set; }
+    // FK: AccountId → UserAccount.Id
+    public virtual UserAccount? UserAccount { get; set; }
 }
