@@ -1,6 +1,4 @@
 
-using LowlandTech.Accounts.Abstractions;
-
 namespace LowlandTech.Accounts.Domain;
 
 public class AccountsContext : DbContext

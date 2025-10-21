@@ -7,6 +7,7 @@ global using System.Threading.Tasks;
 global using MediatR;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using LowlandTech.Accounts.Abstractions;
 global using LowlandTech.Accounts.Abstractions.Enums;
 global using LowlandTech.Accounts.Domain;
 global using LowlandTech.Accounts.Domain.Entities;
