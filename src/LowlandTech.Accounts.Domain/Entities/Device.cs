@@ -30,5 +30,5 @@ public partial class Device
     public bool IsTrusted { get; set; }
     
     // FK: AccountId → UserAccount.Id
-    public virtual UserAccount UserAccount { get; set; }
+    public virtual UserAccount? UserAccount { get; set; }
 }

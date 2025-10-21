@@ -17,8 +17,8 @@ public class AuthLoginConfiguration : IEntityTypeConfiguration<AuthLogin>
         b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.AuthLogins)
             .HasForeignKey(x => x.AccountId)
-            .OnDelete(DeleteBehavior.Cascade);
-            b.Property(x => x.AccountId).IsRequired();
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(true);
     }
 }
 

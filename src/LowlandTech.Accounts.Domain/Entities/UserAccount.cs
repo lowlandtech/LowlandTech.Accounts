@@ -39,23 +39,23 @@ public partial class UserAccount
     
     public DateTime? LastLoginUtc { get; set; }
     
-    public virtual ICollection<AccountPreference> Preferences { get; set; } = new List<AccountPreference>();
+    public virtual ICollection<AccountPreference> Preferences { get; set; } = new HashSet<AccountPreference>();
     
-    public virtual ICollection<Address> Addresses { get; set; } = new List<Address>();
+    public virtual ICollection<Address> Addresses { get; set; } = new HashSet<Address>();
     
-    public virtual ICollection<ApiKey> ApiKeys { get; set; } = new List<ApiKey>();
+    public virtual ICollection<ApiKey> ApiKeys { get; set; } = new HashSet<ApiKey>();
     
-    public virtual ICollection<AuditEvent> AuditEvents { get; set; } = new List<AuditEvent>();
+    public virtual ICollection<AuditEvent> AuditEvents { get; set; } = new HashSet<AuditEvent>();
     
-    public virtual ICollection<AuthLogin> AuthLogins { get; set; } = new List<AuthLogin>();
+    public virtual ICollection<AuthLogin> AuthLogins { get; set; } = new HashSet<AuthLogin>();
     
-    public virtual ICollection<Device> Devices { get; set; } = new List<Device>();
+    public virtual ICollection<Device> Devices { get; set; } = new HashSet<Device>();
     
-    public virtual ICollection<EmailVerificationToken> EmailTokens { get; set; } = new List<EmailVerificationToken>();
+    public virtual ICollection<EmailVerificationToken> EmailTokens { get; set; } = new HashSet<EmailVerificationToken>();
     
-    public virtual ICollection<PasswordResetToken> ResetTokens { get; set; } = new List<PasswordResetToken>();
+    public virtual ICollection<PasswordResetToken> ResetTokens { get; set; } = new HashSet<PasswordResetToken>();
     
-    public virtual ICollection<RecoveryCode> RecoveryCodes { get; set; } = new List<RecoveryCode>();
+    public virtual ICollection<RecoveryCode> RecoveryCodes { get; set; } = new HashSet<RecoveryCode>();
     
-    public virtual ICollection<Session> Sessions { get; set; } = new List<Session>();
+    public virtual ICollection<Session> Sessions { get; set; } = new HashSet<Session>();
 }

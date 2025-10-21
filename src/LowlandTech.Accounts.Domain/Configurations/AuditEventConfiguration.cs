@@ -16,8 +16,8 @@ public class AuditEventConfiguration : IEntityTypeConfiguration<AuditEvent>
         b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.AuditEvents)
             .HasForeignKey(x => x.AccountId)
-            .OnDelete(DeleteBehavior.Cascade);
-            b.Property(x => x.AccountId).IsRequired(false);
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(false);
     }
 }
 

@@ -40,8 +40,9 @@ global using System.ComponentModel; // DescriptionAttribute etc.
 // === This plugin’s contracts & domain ===
 global using LowlandTech.Abstractions.Extensions;
 global using LowlandTech.Abstractions.UseCases;
-global using LowlandTech.Abstractions.Plugins;
-global using LowlandTech.Abstractions.Plugins.Attributes;
+global using LowlandTech.Plugins;
+global using LowlandTech.Plugins.Extensions;
+global using LowlandTech.Plugins.Types;
 global using LowlandTech.Accounts.Abstractions;
 global using LowlandTech.Accounts.Abstractions.AccountPreferences;
 global using LowlandTech.Accounts.Abstractions.Addresses;

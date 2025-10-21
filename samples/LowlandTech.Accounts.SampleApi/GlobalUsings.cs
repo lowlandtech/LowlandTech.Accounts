@@ -10,3 +10,4 @@ global using System.Text.Json.Serialization;
 global using Lamar;
 global using Lamar.Microsoft.DependencyInjection;
 global using LowlandTech.Abstractions.Plugins;
+global using LowlandTech.Plugins.Extensions;

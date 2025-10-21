@@ -22,5 +22,5 @@ public partial class PasswordResetToken
     public DateTime? UsedUtc { get; set; }
     
     // FK: AccountId → UserAccount.Id
-    public virtual UserAccount UserAccount { get; set; }
+    public virtual UserAccount? UserAccount { get; set; }
 }

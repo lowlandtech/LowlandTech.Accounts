@@ -38,5 +38,5 @@ public partial class Address
     public bool IsPrimary { get; set; }
     
     // FK: AccountId → UserAccount.Id
-    public virtual UserAccount UserAccount { get; set; }
+    public virtual UserAccount? UserAccount { get; set; }
 }

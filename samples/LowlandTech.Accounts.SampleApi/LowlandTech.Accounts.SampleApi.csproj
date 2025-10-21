@@ -16,7 +16,8 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.9" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.8.11" />
-    <PackageReference Include="LowlandTech.Abstractions" Version="1.0.1" />
+    <PackageReference Include="LowlandTech.Abstractions" Version="2025.10.4" />
+    <PackageReference Include="LowlandTech.Plugins" Version="2025.10.4" />
     <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="15.0.0" />
   </ItemGroup>
 

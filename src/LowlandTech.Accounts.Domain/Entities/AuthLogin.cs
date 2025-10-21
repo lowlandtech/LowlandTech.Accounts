@@ -32,5 +32,5 @@ public partial class AuthLogin
     public string? Scopes { get; set; } = string.Empty;
     
     // FK: AccountId → UserAccount.Id
-    public virtual UserAccount UserAccount { get; set; }
+    public virtual UserAccount? UserAccount { get; set; }
 }

@@ -9,6 +9,7 @@ public sealed class SeedAccountsDataUseCase(AccountsContext db) : IUseCase
 
     public async Task SeedAsync()
     {
+        await Task.CompletedTask;
     }
 }
 

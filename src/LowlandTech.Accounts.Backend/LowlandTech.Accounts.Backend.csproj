@@ -23,7 +23,8 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
     <PackageReference Include="Lamar" Version="15.0.1" />
-    <PackageReference Include="LowlandTech.Abstractions" Version="1.0.1" />
+    <PackageReference Include="LowlandTech.Abstractions" Version="2025.10.4" />
+    <PackageReference Include="LowlandTech.Plugins" Version="2025.10.4" />
   </ItemGroup>
   <ItemGroup><!-- ProjectReference Include="..\Other\Other.csproj" /> -->
   

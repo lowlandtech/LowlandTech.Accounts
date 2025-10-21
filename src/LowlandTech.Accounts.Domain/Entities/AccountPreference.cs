@@ -24,5 +24,5 @@ public partial class AccountPreference
     public string? ValueType { get; set; } = string.Empty;
     
     // FK: AccountId → UserAccount.Id
-    public virtual UserAccount UserAccount { get; set; }
+    public virtual UserAccount? UserAccount { get; set; }
 }

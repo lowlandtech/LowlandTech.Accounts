@@ -13,8 +13,8 @@ public class EmailVerificationTokenConfiguration : IEntityTypeConfiguration<Emai
         b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.EmailTokens)
             .HasForeignKey(x => x.AccountId)
-            .OnDelete(DeleteBehavior.Cascade);
-            b.Property(x => x.AccountId).IsRequired();
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(true);
     }
 }
 

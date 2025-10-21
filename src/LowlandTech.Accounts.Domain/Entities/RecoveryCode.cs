@@ -23,5 +23,5 @@ public partial class RecoveryCode
     public DateTime? UsedUtc { get; set; }
     
     // FK: AccountId → UserAccount.Id
-    public virtual UserAccount UserAccount { get; set; }
+    public virtual UserAccount? UserAccount { get; set; }
 }

@@ -13,7 +13,6 @@ global using System.Threading.Tasks;
 
 // xUnit
 global using Xunit;
-global using Xunit.Abstractions;
 
 // Shouldly assertions
 global using Shouldly;
@@ -39,9 +38,8 @@ global using Microsoft.Playwright;
 
 // LowlandTech.Abstractions for use cases
 global using LowlandTech.Abstractions.UseCases;
-
-// Test infrastructure from Abstractions
-global using LowlandTech.Accounts.Abstractions.Features;
+global using LowlandTech.Testing.Features.Attributes;
+global using LowlandTech.Testing.Features.Base;
 
 // Domain entities and DTOs
 global using LowlandTech.Accounts.Domain;
@@ -50,6 +48,7 @@ global using LowlandTech.Accounts.Domain.Extensions;
 
 // Sample API for integration testing
 global using LowlandTech.Accounts.SampleApi;
+global using Program = LowlandTech.Accounts.SampleApi.Program;
 
 // Test fakes, helpers, and use cases
 global using LowlandTech.Accounts.Tests.Fakes;

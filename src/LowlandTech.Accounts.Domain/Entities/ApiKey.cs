@@ -30,5 +30,5 @@ public partial class ApiKey
     public DateTime? RevokedUtc { get; set; }
     
     // FK: AccountId → UserAccount.Id
-    public virtual UserAccount UserAccount { get; set; }
+    public virtual UserAccount? UserAccount { get; set; }
 }

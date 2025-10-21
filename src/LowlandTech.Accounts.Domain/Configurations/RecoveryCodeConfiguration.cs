@@ -14,8 +14,8 @@ public class RecoveryCodeConfiguration : IEntityTypeConfiguration<RecoveryCode>
         b.HasOne<UserAccount>(x => x.UserAccount)
             .WithMany(p => p.RecoveryCodes)
             .HasForeignKey(x => x.AccountId)
-            .OnDelete(DeleteBehavior.Cascade);
-            b.Property(x => x.AccountId).IsRequired();
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(true);
     }
 }
 
