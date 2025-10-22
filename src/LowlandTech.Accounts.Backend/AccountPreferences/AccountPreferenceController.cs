@@ -3,7 +3,7 @@ namespace LowlandTech.Accounts.Backend.AccountPreferences;
 [ApiController]
 [Produces("application/json")]
 [EnableRateLimiting("strict")]
-[Route("api/[controller]")]
+[Route("api/accountpreferences")]
 public sealed class AccountPreferenceController : ControllerBase
 {
     private readonly IMediator _mediator;

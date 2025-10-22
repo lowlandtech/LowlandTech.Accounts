@@ -3,7 +3,7 @@ namespace LowlandTech.Accounts.Backend.Addresses;
 [ApiController]
 [Produces("application/json")]
 [EnableRateLimiting("strict")]
-[Route("api/[controller]")]
+[Route("api/addresses")]
 public sealed class AddressController : ControllerBase
 {
     private readonly IMediator _mediator;

@@ -3,7 +3,7 @@ namespace LowlandTech.Accounts.Backend.AuthLogins;
 [ApiController]
 [Produces("application/json")]
 [EnableRateLimiting("strict")]
-[Route("api/[controller]")]
+[Route("api/authlogins")]
 public sealed class AuthLoginController : ControllerBase
 {
     private readonly IMediator _mediator;

@@ -3,7 +3,7 @@ namespace LowlandTech.Accounts.Backend.Devices;
 [ApiController]
 [Produces("application/json")]
 [EnableRateLimiting("strict")]
-[Route("api/[controller]")]
+[Route("api/devices")]
 public sealed class DeviceController : ControllerBase
 {
     private readonly IMediator _mediator;

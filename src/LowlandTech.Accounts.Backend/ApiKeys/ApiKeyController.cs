@@ -3,7 +3,7 @@ namespace LowlandTech.Accounts.Backend.ApiKeys;
 [ApiController]
 [Produces("application/json")]
 [EnableRateLimiting("strict")]
-[Route("api/[controller]")]
+[Route("api/apikeys")]
 public sealed class ApiKeyController : ControllerBase
 {
     private readonly IMediator _mediator;

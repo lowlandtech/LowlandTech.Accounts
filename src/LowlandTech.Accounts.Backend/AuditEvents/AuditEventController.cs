@@ -3,7 +3,7 @@ namespace LowlandTech.Accounts.Backend.AuditEvents;
 [ApiController]
 [Produces("application/json")]
 [EnableRateLimiting("strict")]
-[Route("api/[controller]")]
+[Route("api/auditevents")]
 public sealed class AuditEventController : ControllerBase
 {
     private readonly IMediator _mediator;

@@ -3,7 +3,7 @@ namespace LowlandTech.Accounts.Backend.Sessions;
 [ApiController]
 [Produces("application/json")]
 [EnableRateLimiting("strict")]
-[Route("api/[controller]")]
+[Route("api/sessions")]
 public sealed class SessionController : ControllerBase
 {
     private readonly IMediator _mediator;

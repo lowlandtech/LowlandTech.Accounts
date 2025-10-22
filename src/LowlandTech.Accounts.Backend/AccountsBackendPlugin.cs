@@ -19,7 +19,7 @@ public sealed class AccountsBackendPlugin : Plugin
                 options.Retry.MaxRetryAttempts = 5;
                 options.Retry.UseJitter = true;
                 options.CircuitBreaker.BreakDuration = TimeSpan.FromSeconds(30);
-                options.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(10);
+                options.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(30); // Must be at least 2x AttemptTimeout
                 options.AttemptTimeout.Timeout = TimeSpan.FromSeconds(10);
             });
 

@@ -3,7 +3,7 @@ namespace LowlandTech.Accounts.Backend.UserAccounts;
 [ApiController]
 [Produces("application/json")]
 [EnableRateLimiting("strict")]
-[Route("api/[controller]")]
+[Route("api/useraccounts")]
 public sealed class UserAccountController : ControllerBase
 {
     private readonly IMediator _mediator;

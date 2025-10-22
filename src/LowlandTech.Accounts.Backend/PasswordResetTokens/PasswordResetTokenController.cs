@@ -3,7 +3,7 @@ namespace LowlandTech.Accounts.Backend.PasswordResetTokens;
 [ApiController]
 [Produces("application/json")]
 [EnableRateLimiting("strict")]
-[Route("api/[controller]")]
+[Route("api/passwordresettokens")]
 public sealed class PasswordResetTokenController : ControllerBase
 {
     private readonly IMediator _mediator;

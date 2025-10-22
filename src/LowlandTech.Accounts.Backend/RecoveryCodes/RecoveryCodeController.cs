@@ -3,7 +3,7 @@ namespace LowlandTech.Accounts.Backend.RecoveryCodes;
 [ApiController]
 [Produces("application/json")]
 [EnableRateLimiting("strict")]
-[Route("api/[controller]")]
+[Route("api/recoverycodes")]
 public sealed class RecoveryCodeController : ControllerBase
 {
     private readonly IMediator _mediator;

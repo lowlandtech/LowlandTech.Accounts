@@ -3,7 +3,7 @@ namespace LowlandTech.Accounts.Backend.EmailVerificationTokens;
 [ApiController]
 [Produces("application/json")]
 [EnableRateLimiting("strict")]
-[Route("api/[controller]")]
+[Route("api/emailverificationtokens")]
 public sealed class EmailVerificationTokenController : ControllerBase
 {
     private readonly IMediator _mediator;

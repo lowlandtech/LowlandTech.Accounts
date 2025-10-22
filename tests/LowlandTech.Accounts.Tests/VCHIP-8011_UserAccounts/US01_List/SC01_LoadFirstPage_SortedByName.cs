@@ -1,3 +1,5 @@
+using LowlandTech.Accounts.Abstractions.UserAccounts;
+
 namespace LowlandTech.Accounts.Tests.VCHIP_8011_UserAccounts.US01_List;
 
 [Scenario(
@@ -30,21 +32,21 @@ public sealed class SC01_LoadFirstPage_SortedByName : WhenTestingForAsync<AppFac
     [Then("Results are ordered by Name", "UAC002")]
     public async Task Results_Are_Sorted_By_Name()
     {
-        var items = await _client.GetFromJsonAsync<List<UserAccount>>("/api/useraccounts?skip=0&take=100");
-        items.ShouldNotBeNull();
-        items.Count.ShouldBeGreaterThanOrEqualTo(1);
+        var response = await _client.GetFromJsonAsync<RetrieveAllUserAccountResponse>("/api/useraccounts?skip=0&take=100");
+        response?.Items.ShouldNotBeNull();
+        response?.Items.Count.ShouldBeGreaterThanOrEqualTo(1);
 
         // Verify the sequence is sorted by Name
-        var sorted = items.OrderBy(x => x.Name).ToList();
-        items.ShouldBe(sorted);
+        var sorted = response?.Items.OrderBy(x => x.Name).ToList();
+        response?.Items.ShouldBe(sorted);
     }
 
     [Fact]
     [Then("The table renders the returned UserAccounts", "UAC003")]
     public async Task Returns_First_Page_Items()
     {
-        var items = await _client.GetFromJsonAsync<List<UserAccount>>("/api/useraccounts?skip=0&take=100");
-        items.ShouldNotBeNull();
-        items.Count.ShouldBeGreaterThanOrEqualTo(1);
+        var response = await _client.GetFromJsonAsync<RetrieveAllUserAccountResponse>("/api/useraccounts?skip=0&take=100");
+        response?.Items.ShouldNotBeNull();
+        response?.Items.Count.ShouldBeGreaterThanOrEqualTo(1);
     }
 }
